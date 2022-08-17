@@ -30,83 +30,7 @@ exports.getProductById = async (req, res, next, id) => {
 };
 
 
-// exports.createProduct = (req, res) => {
-
-//     try {
-
-//         const {name} = req.body;
-        
-
-//         let form = new formidable.IncomingForm();
-//         console.log(form);
-//         form.keepExtensions = true;
-
-//         form.parse(req, async(err, fields, file) => {
-//             console.log('inside form ',fields);
-           
-//             if (err) return res.status(400).json({
-//                 error: "problem with image"
-//             })
-
-            
-          
-//             const {photo, price, name, description, catagory, stock } = fields;
-
-           
-
-
-//             // if (
-//             //     !price || !name || !description || !catagory || !stock || !photo
-//             //  )
-//             //   {
-//             //     res.status(400).json({
-//             //         error: "please provide all fields"
-//             //     })
-//             // }
-
-//             let product = new Product(fields);
-
-//             //handle file here
-
-//             if (file.photo) {
-
-//                 if (file.photo.size > 3000000) {
-//                     return res.status(400).json({ error: "file too large" })
-//                 }
-//                 product.photo.data = fs.readFileSync(file.photo.filepath);
-
-//                 product.photo.contentType = file.photo.mimetype;
-
-//             };
-
-//             //save to db 
-
-//             let newProduct = await product.save();
-            
-//             if (!newProduct) {
-
-//                 console.log('product is not created');
-
-//                 res.status(400).json({ error: "failed to save product" });
-
-//             }
-//             console.log('back product is',newProduct);
-
-
-//             return res.send(newProduct);
-
-
-
-
-
-//         });
-
-//     } catch (err) {
-//         res.status(400).json({ error: "failed to save" });
-//     }
-
-// };
-
+// creating a product with multer
 
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -125,7 +49,7 @@ exports.createProduct =async (req,res) =>{
 
     const {photo, price, name, description, catagory, stock } = req.body;
 
-    // console.log(req.body);
+   
 
     try{
         console.log("name",name,photo);

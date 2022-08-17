@@ -39,7 +39,7 @@ const AddCatagory = () => {
 
                     setError(true);
 
-                    toast.error("Failed to create Category")
+                    toast.error(error)
                 }
 
                 else {

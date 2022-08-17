@@ -42,9 +42,9 @@ const CreateProduct = () => {
     const [createdProduct,setCreatedProduct] = useState('');
     const [getRedirect,setGetRedirect] = useState(false);
 
-    const [file,setFile] = useState([]);
+  
 
-    const [formData,setFormData] = useState(new FormData());
+    // const [formData,setFormData] = useState(new FormData());
 
 
     // const { name, description, price, stock,
@@ -136,33 +136,33 @@ const CreateProduct = () => {
 
         e.preventDefault();
 
-        setFormData({...formData,
+        let formData = new FormData();
 
-            "name":name,
-            "description":description,
-            "price":price,
-            "stock":stock,
-            "photo":photo,
-            "catagory":catagory
-    });
+        formData.append('name',name);
+        formData.append('description',description);
+        formData.append('price',price);
+        formData.append('stock',stock);
+        formData.append('photo',photo);
+        formData.append('catagory',catagory);
 
-    console.log(formData);
 
-    setLoading(true);
+        console.log(formData);
 
-    createProduct(user._id,token,formData)
-    .then(data=>{
+        setLoading(true);
 
-        if(data.error){
-            setError(data.error);
-            console.log(error);
-            toast.error("something went wrong");
+        createProduct(user._id,token,formData)
+        .then(data=>{
 
-        }else{
-            
-            toast.success("product created successfully")
-        }
-    })
+            if(data.error){
+                setError(data.error);
+                console.log(error);
+                toast.error("something went wrong");
+
+            }else{
+
+                toast.success("product created successfully");
+            }
+        })
 
         
 
@@ -249,9 +249,7 @@ const CreateProduct = () => {
 
                 </form>
                
-                {
-                    JSON.stringify(formData)
-                }
+                
             </Base>
         </>
     )

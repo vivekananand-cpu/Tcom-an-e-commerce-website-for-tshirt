@@ -37,22 +37,18 @@ export const getAllCatagories = () =>{
 
 export const createProduct =(userId,token,product) =>{
     
-   
-    
-    return axios.post(`${API}/product/create/${userId}`,product,{
+    return fetch(`${API}/product/create/${userId}`,{
 
-     
+        method:"POST",
+
         headers:{
-          
-           
-            Authorization: `Bearer ${token}`
-        }
-        
-        
+
+            Authorization :`Bearer ${token}`
+        },
+
+        body:product
     })
-
-    .then(res=>console.log(res))
-
+    .then(res=>res.json())
     .catch(err=>console.log(err))
 }
 

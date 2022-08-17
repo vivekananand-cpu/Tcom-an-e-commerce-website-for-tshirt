@@ -1,5 +1,7 @@
 import API from "../../core/backend";
 
+import axios from 'axios';
+
 export const createCatagory = (userId, token, catagory) => {
 
     return fetch(`${API}/catagory/create/${userId}`, {
@@ -35,25 +37,25 @@ export const getAllCatagories = () =>{
 
 export const createProduct =(userId,token,product) =>{
     
-    return fetch(`http://localhost:5000/api/product/create/${userId}`,{
-        method:"POST",
+   
+    
+    return axios.post(`${API}/product/create/${userId}`,product,{
+
+     
         headers:{
-            Accept:"application/json",
+          
+           
             Authorization: `Bearer ${token}`
-        },
-        body:{
-            product
         }
+        
+        
     })
 
-    .then(res=>res.json())
+    .then(res=>console.log(res))
 
     .catch(err=>console.log(err))
+}
 
-};
-
-
-//get all products
 
 export const getAllProducts = () =>{
 

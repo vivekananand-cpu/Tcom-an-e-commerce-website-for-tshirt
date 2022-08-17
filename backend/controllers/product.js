@@ -6,6 +6,8 @@ const fs = require('fs');
 
 const formidable = require('formidable');
 
+const multer = require('multer');
+
 
 
 
@@ -28,72 +30,130 @@ exports.getProductById = async (req, res, next, id) => {
 };
 
 
-exports.createProduct = (req, res) => {
+// exports.createProduct = (req, res) => {
 
-    try {
+//     try {
 
-        console.log(req.body);
+//         const {name} = req.body;
+        
 
-        let form = new formidable.IncomingForm();
-        form.keepExtensions = true;
+//         let form = new formidable.IncomingForm();
+//         console.log(form);
+//         form.keepExtensions = true;
 
-        form.parse(req, async(err, fields, file) => {
+//         form.parse(req, async(err, fields, file) => {
+//             console.log('inside form ',fields);
            
-            if (err) return res.status(400).json({
-                error: "problem with image"
-            })
+//             if (err) return res.status(400).json({
+//                 error: "problem with image"
+//             })
 
-            console.log(fields);
-           
-            const {photo, price, name, description, catagory, stock } = fields;
-
-            if (
-                !price || !name || !description || !catagory || !stock || !photo
-             )
-              {
-                res.status(400).json({
-                    error: "please provide all fields"
-                })
-            }
-
-            let product = new Product(fields);
-
-            //handle file here
-
-            if (file.photo) {
-
-                if (file.photo.size > 3000000) {
-                    return res.status(400).json({ error: "file too large" })
-                }
-                product.photo.data = fs.readFileSync(file.photo.filepath);
-
-                product.photo.contentType = file.photo.mimetype;
-
-            };
-
-            //save to db 
-
-            let newProduct = await product.save();
             
-            if (!newProduct) {
+          
+//             const {photo, price, name, description, catagory, stock } = fields;
 
-                res.status(400).json({ error: "failed to save product" });
-
-            }
-
-            return res.send(newProduct);
+           
 
 
+//             // if (
+//             //     !price || !name || !description || !catagory || !stock || !photo
+//             //  )
+//             //   {
+//             //     res.status(400).json({
+//             //         error: "please provide all fields"
+//             //     })
+//             // }
+
+//             let product = new Product(fields);
+
+//             //handle file here
+
+//             if (file.photo) {
+
+//                 if (file.photo.size > 3000000) {
+//                     return res.status(400).json({ error: "file too large" })
+//                 }
+//                 product.photo.data = fs.readFileSync(file.photo.filepath);
+
+//                 product.photo.contentType = file.photo.mimetype;
+
+//             };
+
+//             //save to db 
+
+//             let newProduct = await product.save();
+            
+//             if (!newProduct) {
+
+//                 console.log('product is not created');
+
+//                 res.status(400).json({ error: "failed to save product" });
+
+//             }
+//             console.log('back product is',newProduct);
 
 
-        });
+//             return res.send(newProduct);
 
-    } catch (err) {
-        res.status(400).json({ error: "failed to save" });
+
+
+
+
+//         });
+
+//     } catch (err) {
+//         res.status(400).json({ error: "failed to save" });
+//     }
+
+// };
+
+
+const storage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'uploads')
+    },
+    filename:(req,file,cb)=>{
+        cb(null,file.originalname)
+    }
+})
+
+exports.upload = multer({storage:storage})
+
+
+
+exports.createProduct =async (req,res) =>{
+
+    const {photo, price, name, description, catagory, stock } = req.body;
+
+    // console.log(req.body);
+
+    try{
+        console.log("name",name,photo);
+        const newProduct = await Product.create({
+        name,
+        description,
+        price,
+        catagory,
+        stock,
+        photo:{
+            data:fs.readFileSync(`uploads/${req.file.filename}`),
+            contentType:"image/png"
+        }
+
+    })
+
+    res.send(newProduct)
+    console.log('product creared');
+
+    }catch(error){
+
+        res.status(400).json({error:"failed to save product"})
     }
 
-};
+    
 
+
+}
 
 exports.getProduct = (req,res) =>{
     try{

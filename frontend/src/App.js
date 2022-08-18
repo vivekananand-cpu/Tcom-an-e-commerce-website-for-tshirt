@@ -4,6 +4,7 @@ import AddCatagory from "./admin/AddCatagory";
 import AdminDashboard from "./admin/AdminDashboard";
 import CreateProduct from "./admin/CreateProduct";
 import ManageCatagories from "./admin/ManageCatagories";
+import ManageProducts from "./admin/ManageProducts";
 import  AdminRoute  from "./auth/AdminRoute";
 import PrivateRoute from "./auth/PrivateRoutes";
 import Home from "./core/Home";
@@ -29,6 +30,9 @@ function App() {
       <Route path="/admin/dashboard" element={<AdminRoute Child={AdminDashboard}   />} />
 
       <Route path="/admin/catagories" element={<AdminRoute Child={ManageCatagories}   />} />
+
+      <Route path="/admin/products" element={<AdminRoute Child={ManageProducts}   />} />
+
 
       <Route path="/admin/create/product" element={<AdminRoute Child={CreateProduct}   />} />
 

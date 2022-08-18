@@ -9,7 +9,7 @@ const Base = ({
 }) => {
     return (
         <>
-            <div className="h-screen w-screen text-white bg-[#1d212a]">
+            <div className="min-h-screen w-screen text-white bg-[#1d212a]">
                 <Menu />
 
                 <div className="w-full flex justify-center pt-10 " >

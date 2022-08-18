@@ -182,7 +182,7 @@ exports.updateProduct = async (req,res) =>{
 exports.getAllProducts = async (req, res) => {
     //we are taking limit from user
 
-    let limit = parseInt(req.query.limit) || 8;
+    let limit = parseInt(req.query.limit) || Infinity;
 
     let sortBy = req.query.sortBy || "_id";
 

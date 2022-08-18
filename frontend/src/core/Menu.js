@@ -25,7 +25,7 @@ const Menu = () => {
 
     const history = useNavigate();
     return (
-        <div className="w-screen p-5 border-b-[1px] border-gray-500">
+        <div className="w-screen sticky top-0 bg-[#1d212a] p-5 border-b-[1px] border-gray-500">
             <ul className="flex gap-4 font-bold">
                 <li className={navClasses}>
 

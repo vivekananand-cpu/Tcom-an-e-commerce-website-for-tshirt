@@ -62,7 +62,7 @@ return fetch(`${API}/products`).then(res=>res.json()).catch(err=>console.log(err
 //delete a product
 
 
-export const deleteProduct =(userId,token,productId) =>{
+export const deleteProduct =(productId,userId,token) =>{
 
 return fetch(`${API}/product/${productId}/${userId}`,{
 
